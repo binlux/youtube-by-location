@@ -1,0 +1,24 @@
+/* xs */
+    @media(max-width:767px){
+        .thumbnail{
+            height: 320px;
+        }
+    }
+    /* sm */
+    @media(min-width:768px) and (max-width:991px){
+        .thumbnail{
+            height: 280px;
+        }
+    }
+    /* md */
+    @media(min-width:992px) and (max-width:1199px){
+        .thumbnail{
+            height: 260px;
+        }
+    }
+    /* lg */
+    @media(min-width:1200px){
+        .thumbnail{
+            height: 260px;
+        }
+    }
