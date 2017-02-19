@@ -12,7 +12,9 @@ module.exports = React.createClass({
             fetchingData: false,
             nextPageToken: null,
             prevPageToken: null,
-            location: ''
+            location: '',
+            distance: 10,
+            sliderValue: 10
         }
     },
     componentWillMount: function () {
@@ -40,10 +42,9 @@ module.exports = React.createClass({
                 fetchingData: false
             });
         }
-
     },
-    getVideos: function (loca) {
-        Api.getVideos(loca)
+    getVideos: function (loca, locationRadius) {
+        Api.getVideos(loca, locationRadius)
             .then(function (data) {
                 this.setState({
                     videoLists: data.items,
@@ -55,9 +56,9 @@ module.exports = React.createClass({
                 }
             }.bind(this));
     },
-    getNextYoutoubePage: function (loca, pageToken) {
+    getNextYoutoubePage: function (loca, pageToken, locationRadius) {
         if (pageToken) {
-            Api.getYoutubePage(loca, pageToken)
+            Api.getYoutubePage(loca, pageToken, locationRadius)
                 .then(function (data) {
                     this.setState({
                         videoLists: data.items,
@@ -68,9 +69,9 @@ module.exports = React.createClass({
                 }.bind(this));
         }
     },
-    getPrevYoutoubePage: function (loca, pageToken) {
+    getPrevYoutoubePage: function (loca, pageToken, locationRadius) {
         if (pageToken) {
-            Api.getYoutubePage(loca, pageToken)
+            Api.getYoutubePage(loca, pageToken, locationRadius)
                 .then(function (data) {
                     this.setState({
                         videoLists: data.items,
@@ -90,7 +91,7 @@ module.exports = React.createClass({
             fetchingData: true,
             location: loc
         });
-        this.getVideos(loc);
+        this.getVideos(loc, this.state.distance);
     },
     handleFocus: function () {
         this.setState({
@@ -105,53 +106,77 @@ module.exports = React.createClass({
     handleNextPage: function () {
         this.setState({
             videoLists: [],
-            fetchingData: (this.state.nextPageToken) ? true : false
+            fetchingData: !!this.state.nextPageToken
         });
-        this.getNextYoutoubePage(this.state.location, this.state.nextPageToken);
+        this.getNextYoutoubePage(this.state.location, this.state.nextPageToken, this.state.distance);
     },
     handlePrevPage: function () {
         this.setState({
             videoLists: [],
-            fetchingData: (this.state.prevPageToken) ? true : false
+            fetchingData: !!this.state.prevPageToken
         });
-        this.getPrevYoutoubePage(this.state.location, this.state.prevPageToken);
+        this.getPrevYoutoubePage(this.state.location, this.state.prevPageToken, this.state.distance);
+    },
+    handleSliderChange: function (e) {
+        var val = e.target.value;
+        var min = e.target.min;
+        this.setState({
+            distance: val,
+            sliderValue:(val - min) * 100 / (e.target.max - min)
+        });
     },
     render: function () {
         return <div>
-            <div className="row">
-                <div className="col-xs-12">
-                    <div className="form-group">
-                        <div className="input-group">
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <div className="form-group">
+                                <div className="input-group">
                                     <span className="input-group-addon" id="term">
                                         <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
                                     </span>
-                            <input onFocus={this.handleFocus}
-                                   placeholder="type a location to search"
-                                   ref="locaSearch"
-                                   onChange={this.handleChange}
-                                   type="text"
-                                   className="form-control" id="loc"
-                                   aria-describedby="term"
-                                   value={this.state.choice}/>
-                        </div>
-                        <div className="y-buttons">
-                            <button onClick={this.handlePrevPage}
-                                    className="btn btn-warning btn-lg" type="button"
-                                    disabled={!this.state.prevPageToken || this.state.fetchingData}>
-                                <span className="glyphicon glyphicon-backward" aria-hidden="true"></span>
-                            </button>
-                            <button onClick={this.handleNextPage}
-                                    className="btn btn-success btn-lg" type="button"
-                                    disabled={!this.state.nextPageToken || this.state.fetchingData}>
-                                <span className="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                            </button>
+                                    <input onFocus={this.handleFocus}
+                                           placeholder="type a location to search"
+                                           ref="locaSearch"
+                                           onChange={this.handleChange}
+                                           type="text"
+                                           className="form-control" id="loc"
+                                           aria-describedby="term"
+                                           value={this.state.choice}/>
+                                </div>
+                                <div className="y-buttons">
+                                    <button onClick={this.handlePrevPage}
+                                            className="btn btn-warning btn-lg" type="button"
+                                            disabled={!this.state.prevPageToken || this.state.fetchingData}>
+                                        <span className="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                                    </button>
+                                    <button onClick={this.handleNextPage}
+                                            className="btn btn-success btn-lg" type="button"
+                                            disabled={!this.state.nextPageToken || this.state.fetchingData}>
+                                        <span className="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                                    </button>
+                                    {!this.state.videoLists.length &&(!this.state.nextPageToken  && !this.state.prevPageToken
+                                    && !this.state.fetchingData)?
+                                        <input type="range"
+                                               min="1"
+                                               max="100"
+                                               value={this.state.distance}
+                                               step="1"
+                                               name="locationrange"
+                                               onChange={this.handleSliderChange}
+                                               style={{backgroundSize: this.state.sliderValue + '% 100%'}}
+                                        />:''}
+                                    <div className="row">
+                                        <div className="col-xs-12">
+                                            <span id="lblrange" className="label label-default">{this.state.distance} KM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="list-group">
+                                {this.renderCountries()}
+                            </div>
                         </div>
                     </div>
-                    <div className="list-group">
-                        {this.renderCountries()}
-                    </div>
-                </div>
-            </div>
             <VideosList videoLs={this.state.videoLists}
                         loadingData={this.state.fetchingData}/>
         </div>

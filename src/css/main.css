@@ -342,3 +342,65 @@ body {
     background: linear-gradient(to right, rgba(241, 241, 106, 1) 0%, rgba(252, 218, 151, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f1f16a', endColorstr='#fcda97', GradientType=1);
 }
+#lblrange{
+    background-color: #9F7B43;
+    color: #fef9e7;
+}
+/*
+Slider
+*/
+
+input[type=range] {
+    margin: 10px 0;
+    outline: none;
+    padding: 0;
+    width: 100%;
+    height: 6px;
+    background-color: rgba(159, 123, 67, 0.3);//#9f7b434d;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9f7b43), color-stop(100%, #9f7b43));
+    background-image: -webkit-linear-gradient(#9f7b43, #9f7b43);
+    background-image: -moz-linear-gradient(#9f7b43, #9f7b43);
+    background-image: -o-linear-gradient(#9f7b43, #9f7b43);
+    background-image: linear-gradient(#9f7b43, #9f7b43);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    -webkit-appearance: none;
+}
+
+input[type=range]::-moz-range-track {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+}
+
+input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #7E6135;
+    background: #FBF1C8;//#fff;
+    border-radius: 100%;
+    box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+    -webkit-appearance: none;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #7E6135;
+    background: #FBF1C8;//#fff;
+    border-radius: 100%;
+    box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+}

@@ -2,7 +2,7 @@ var Fetch = require('whatwg-fetch');
 var Promise = require('es6-promise').Promise; // supporting old browsers
 var geoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?';
 var API_KEY = require('./api-key');
-var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?type=video&videoType=any&videoLiscense=any&order=date&part=snippet&locationRadius=10km&maxResults=50&key=' + API_KEY + '&location=';
+var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?type=video&videoType=any&videoLiscense=any&order=date&part=snippet&maxResults=50&key=' + API_KEY + '&location=';
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -25,8 +25,8 @@ module.exports = {
                 alert('request failed = ' + error)
             })
     },
-    getVideos: function (location) {
-        return fetch(youtubeURL + location)
+    getVideos: function (location, locationRadius) {
+        return fetch(youtubeURL + location + "&locationRadius=" + locationRadius + "km")
             .then(checkStatus)
             .then(function (response) {
                 return response.json()
@@ -34,8 +34,8 @@ module.exports = {
                 alert('request failed = ' + error)
             })
     },
-    getYoutubePage: function (loca, pageToken) {
-        return fetch(youtubeURL + loca + '&pageToken=' + pageToken)
+    getYoutubePage: function (loca, pageToken, locationRadius) {
+        return fetch(youtubeURL + loca + '&pageToken=' + pageToken + "&locationRadius=" + locationRadius + "km")
             .then(checkStatus)
             .then(function (response) {
                 return response.json()
