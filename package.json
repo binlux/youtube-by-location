@@ -1,7 +1,7 @@
 {
-  "name": "youtube-by-location",
+  "name": "react-todos",
   "version": "1.0.0",
-  "description": "search youtube video by location",
+  "description": "React todos application",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,24 +10,24 @@
   "license": "MIT",
   "dependencies": {
     "es6-promise": "^4.0.5",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "whatwg-fetch": "^2.0.1"
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "whatwg-fetch": "^2.0.2"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
     "babelify": "^7.3.0",
-    "browserify": "^13.1.0",
+    "browserify": "^14.1.0",
     "bundle-collapser": "^1.2.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-minify-css": "^1.2.4",
-    "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
+    "gulp-uglify": "^2.0.1",
+    "gulp-util": "^3.0.8",
     "reactify": "^1.1.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.8.0"
+    "watchify": "^3.9.0"
   }
 }
