@@ -1,7 +1,8 @@
 var React = require('react');
+var createReactClass = require('create-react-class');
 var rootVideoURL = 'https://www.youtube.com/watch?v=';
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     renderVideos: function () {
         if (!this.props.videoLs.length && !this.props.loadingData) {
             return (

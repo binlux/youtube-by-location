@@ -1,9 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
 var VideosList = require('./videos-list');
 var Api = require('./api');
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     getInitialState: function () {
         return {
             countries: [],
